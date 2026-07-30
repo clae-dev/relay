@@ -177,28 +177,28 @@ export default function ProductPage() {
             onSelect={() => setWithSubscription(true)}
             title="본품 + 리필 구독 예약"
             description="리필만 별도 배송되며 구독가를 미리 확보해요."
-          />
+          >
+            {withSubscription && (
+              <span className="mt-3 block border-t border-primary/20 pt-3">
+                <span className="flex items-center justify-between text-[13.5px]">
+                  <span className="text-ink-soft">리필 구독가</span>
+                  <span className="font-bold text-ink">
+                    {formatWon(product.refillPrice)}
+                  </span>
+                </span>
+                <span className="mt-2 flex items-center justify-between text-[13px]">
+                  <span className="text-ink-soft">첫 리필 안내</span>
+                  <span className="text-ink-faint">
+                    예상 소진 {product.benefitWindowDays}일 후
+                  </span>
+                </span>
+                <span className="mt-1 block text-right text-[11.5px] text-ink-faint">
+                  예상 시점 14일 전에 사용 여부를 확인해요
+                </span>
+              </span>
+            )}
+          </RadioOption>
         </div>
-
-        {withSubscription && (
-          <div className="mt-3 rounded-card bg-surface px-4 py-3">
-            <div className="flex items-center justify-between text-[13.5px]">
-              <span className="text-ink-soft">리필 구독가</span>
-              <span className="font-bold text-ink">
-                {formatWon(product.refillPrice)}
-              </span>
-            </div>
-            <div className="mt-2 flex items-center justify-between text-[13px]">
-              <span className="text-ink-soft">첫 리필 안내</span>
-              <span className="text-ink-faint">
-                예상 소진 {product.benefitWindowDays}일 후
-              </span>
-            </div>
-            <p className="mt-1 text-right text-[11.5px] text-ink-faint">
-              예상 시점 14일 전에 사용 여부를 확인해요
-            </p>
-          </div>
-        )}
 
         <p className="mt-3 text-center text-[12px] text-ink-faint">
           리필 금액은 수령을 확정할 때 결제돼요.

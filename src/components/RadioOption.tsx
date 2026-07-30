@@ -3,6 +3,7 @@ interface RadioOptionProps {
   title: string;
   description?: string;
   trailing?: React.ReactNode;
+  children?: React.ReactNode;
   onSelect: () => void;
 }
 
@@ -11,6 +12,7 @@ export function RadioOption({
   title,
   description,
   trailing,
+  children,
   onSelect,
 }: RadioOptionProps) {
   return (
@@ -37,6 +39,7 @@ export function RadioOption({
             {description}
           </span>
         )}
+        {children}
       </span>
       {trailing}
     </button>
