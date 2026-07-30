@@ -111,13 +111,9 @@ export default function ProductPage() {
           </span>
         </div>
 
-        <div className="mt-3 flex flex-wrap items-center justify-center gap-x-1 gap-y-1 rounded-card bg-surface px-4 py-3 text-center text-[13px] font-semibold text-ink-soft">
-          {product.giftLine.split(" + ").map((part, i) => (
-            <span key={i} className="inline-flex items-center gap-1">
-              <Image src="/icons/sparkle.png" alt="" width={13} height={13} />
-              {part}
-            </span>
-          ))}
+        <div className="mt-3 flex items-center justify-center gap-1 rounded-card bg-surface px-4 py-3 text-center text-[13px] font-semibold text-ink-soft">
+          <Image src="/icons/sparkle.png" alt="" width={13} height={13} />
+          {product.giftLine}
         </div>
       </div>
 
