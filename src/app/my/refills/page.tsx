@@ -196,9 +196,7 @@ function SubscriptionCard({
             {product.brand} {product.name}
           </p>
           <p className="text-[12.5px] text-ink-faint">{product.option}</p>
-          <span className="mt-1 inline-block rounded-full bg-surface px-2 py-0.5 text-[11.5px] font-semibold text-ink-soft">
-            {statusLabel}
-          </span>
+          <p className="mt-1 text-[15px] text-ink">{statusLabel}</p>
         </div>
       </div>
 
@@ -238,23 +236,9 @@ function SubscriptionCard({
           <Link href={`/my/refills/${sub.id}/check`}>
             <SecondaryButton>리필 사용 여부 확인하기</SecondaryButton>
           </Link>
-          <div className="flex gap-2">
-            <button
-              onClick={onChangeDate}
-              className="flex-1 rounded-btn border border-line py-2.5 text-[12.5px] font-bold text-ink"
-            >
-              알림일 변경
-            </button>
-            <button
-              onClick={onSkip}
-              className="flex-1 rounded-btn border border-line py-2.5 text-[12.5px] font-bold text-ink"
-            >
-              이번 회차 건너뛰기
-            </button>
-          </div>
-          <DangerGhostButton onClick={onEnd} className="py-2.5 text-[12.5px]">
-            혜택 종료
-          </DangerGhostButton>
+          <SecondaryButton onClick={onChangeDate}>알림일 변경</SecondaryButton>
+          <SecondaryButton onClick={onSkip}>이번 회차 건너뛰기</SecondaryButton>
+          <DangerGhostButton onClick={onEnd}>혜택 종료</DangerGhostButton>
         </div>
       ) : null}
     </div>

@@ -154,21 +154,11 @@ function CombineItem({
       } ${locked ? "opacity-90" : ""}`}
     >
       <span
-        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md border-2 ${
-          checked ? "border-primary bg-primary" : "border-ink-faint"
+        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 ${
+          checked ? "border-primary" : "border-ink-faint"
         }`}
       >
-        {checked && (
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-            <path
-              d="m5 12.5 4.5 4.5L19 7"
-              stroke="white"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        )}
+        {checked && <span className="h-2.5 w-2.5 rounded-full bg-primary" />}
       </span>
       <ProductThumb tone={tone} size={48} />
       <div>

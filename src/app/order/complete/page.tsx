@@ -88,12 +88,12 @@ export default function OrderCompletePage() {
 
       <div className="flex-1 overflow-y-auto">
         <div className="flex flex-col items-center px-6 pt-10">
-          <CheckCircleIcon className="text-primary" />
+          <CheckCircleIcon className="text-ink" />
           <h1 className="mt-4 text-center text-[19px] font-bold leading-snug text-ink">
             본품 주문과 리필 예약이 완료됐어요
           </h1>
           <p className="mt-1 text-[13px] text-ink-faint">
-            소진 시점에 맞춰 리필 알림으로 알려드릴게요
+            3개월 뒤 리필 알람으로 알려드릴게요
           </p>
         </div>
 
