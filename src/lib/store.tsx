@@ -83,7 +83,16 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       if (raw) {
         const parsed = JSON.parse(raw) as State;
         // eslint-disable-next-line react-hooks/set-state-in-effect
-        setState((prev) => ({ ...prev, ...parsed }));
+        setState((prev) => ({
+          ...prev,
+          ...parsed,
+          // A page-level effect may already have initialized these before
+          // hydration ran (child effects fire before this provider's effect) —
+          // don't let a stale/null persisted draft clobber that.
+          draftPurchase: prev.draftPurchase ?? parsed.draftPurchase ?? null,
+          draftRefillCheckout:
+            prev.draftRefillCheckout ?? parsed.draftRefillCheckout ?? null,
+        }));
       }
     } catch {
       // ignore corrupt storage

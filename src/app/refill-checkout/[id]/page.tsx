@@ -86,11 +86,8 @@ export default function RefillCheckoutPage() {
                     <p className="text-[13.5px] font-bold text-ink">
                       {p.brand}
                     </p>
-                    <p className="text-[13px] text-ink-soft leading-snug">
-                      {p.name}
-                    </p>
-                    <p className="text-[12.5px] text-ink-faint">
-                      {p.option}(리필)
+                    <p className="text-[14px] text-ink leading-snug">
+                      {p.name} {p.option}(리필)
                     </p>
                     <p className="mt-0.5 text-[14px] font-bold text-ink">
                       {formatWon(p.refillPrice)}
@@ -108,23 +105,20 @@ export default function RefillCheckoutPage() {
           <h2 className="mb-2 text-[15px] font-bold text-ink">배송 방법</h2>
           <Link
             href={`/refill-checkout/${sub.id}/combine`}
-            className="flex w-full items-center justify-between rounded-card border border-line px-3.5 py-3"
+            className="flex w-full items-center justify-between"
           >
-            <div>
-              <p className="text-[13.5px] font-bold text-ink">
-                {combine ? "함께 받기" : "받을 리필 선택"}
-              </p>
-              <p className="text-[12px] text-ink-faint">
-                {combine ? "한 상자로 무료배송" : "다른 리필과 합배송할 수 있어요"}
-              </p>
-            </div>
-            <div className="flex items-center gap-1 text-accent">
-              {combine && (
-                <span className="text-[12.5px] font-bold">+1,000P</span>
-              )}
-              <ChevronDownIcon className="-rotate-90 text-ink-faint" />
-            </div>
+            <p className="text-[13.5px] font-bold text-ink">
+              {combine ? "함께 받기" : "받을 리필 선택"}
+            </p>
+            {combine && (
+              <span className="text-[12.5px] font-bold text-accent">
+                +1,000P
+              </span>
+            )}
           </Link>
+          <p className="text-[12px] text-ink-faint">
+            {combine ? "한 상자로 무료배송" : "다른 리필과 합배송할 수 있어요"}
+          </p>
         </div>
 
         <div className="h-2 bg-surface" />
@@ -145,14 +139,18 @@ export default function RefillCheckoutPage() {
         <div className="h-2 bg-surface" />
 
         <div className="px-4 py-4">
-          <h2 className="mb-2 text-[15px] font-bold text-ink">
-            오늘 결제 금액
-          </h2>
-          <div className="flex items-end justify-between">
-            <span className="text-[13px] text-ink-faint">(운임 포함)</span>
-            <span className="text-[19px] font-extrabold text-ink">
-              {formatWon(total)}
-            </span>
+          <div className="flex items-start justify-between">
+            <h2 className="text-[15px] font-bold text-ink">오늘 결제 금액</h2>
+            <div className="text-right">
+              <p className="text-[19px] font-extrabold text-ink">
+                {formatWon(total)}
+              </p>
+              <p className="mt-0.5 text-[13px] text-ink-faint">(운임 포함)</p>
+              <button className="mt-0.5 flex items-center gap-0.5 text-[13px] text-ink-faint">
+                상세
+                <ChevronDownIcon />
+              </button>
+            </div>
           </div>
         </div>
       </div>
