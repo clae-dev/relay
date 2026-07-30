@@ -58,10 +58,10 @@ export default function UsageCheckPage() {
           <ProductThumb tone={product.tone} size={52} />
           <div>
             <p className="text-[13.5px] font-bold text-ink">
-              {product.brand} {product.name}
+              {product.brand}
             </p>
-            <p className="text-[12.5px] text-ink-faint">
-              {product.option} (리필)
+            <p className="text-[13.5px] text-ink leading-snug">
+              {product.name} {product.option} (리필)
             </p>
             <p className="mt-0.5 text-[14.5px] font-bold text-ink">
               {formatWon(product.refillPrice)}

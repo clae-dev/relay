@@ -184,11 +184,10 @@ function ProductRow({
     <div className="flex items-center gap-3">
       <ProductThumb tone={tone} size={52} />
       <div className="flex-1">
-        <p className="text-[13.5px] font-bold text-ink">
-          {brand} {name}
-        </p>
+        <p className="text-[13.5px] font-bold text-ink">{brand}</p>
+        <p className="text-[13.5px] text-ink">{name}</p>
         {option && (
-          <p className="text-[12.5px] text-ink-faint">{option} · 1개</p>
+          <p className="text-[12.5px] text-ink-faint">{option} | 1개</p>
         )}
         {typeof price === "number" ? (
           <p className="mt-0.5 text-[14px] font-bold text-ink">
