@@ -151,7 +151,7 @@ function VoucherCard({
       <div className="mt-3 flex items-center justify-between text-[13.5px]">
         <span className="text-ink-soft">첫 리필 혜택</span>
         <span className="font-bold text-ink">
-          본품과 동일한 {product.benefitPercent}%
+          본품과 동일한 {product.benefitPercent}% 혜택
         </span>
       </div>
       <div className="mt-1.5 flex items-center justify-between text-[13.5px]">
