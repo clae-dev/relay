@@ -57,7 +57,10 @@ export default function ProductPage() {
       </div>
 
       <div className="px-4 pt-3">
-        <ProductThumb tone={product.tone} size={36} />
+        <div
+          className="h-[35px] w-[35px] rounded-[8px]"
+          style={{ background: product.swatchColor }}
+        />
       </div>
 
       <div className="px-4 pt-4">

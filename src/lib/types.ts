@@ -7,6 +7,7 @@ export interface Product {
   detailTitle: string; // full title shown on the product detail page heading
   option: string;
   tone: ProductTone;
+  swatchColor: string; // 상세 페이지 색상 스와치 (hex)
   price: number;
   maxBenefitPrice: number; // today-only flash price shown as a marketing badge (not charged at checkout)
   refillPrice: number;
