@@ -82,7 +82,7 @@ export default function CheckoutPage() {
                 brand={product.brand}
                 name={`${product.name} (리필)`}
                 option={undefined}
-                priceLabel="오늘 리필 0원 · 배송 전 결제"
+                priceLabel="오늘 리필 0원 배송 전 결제"
               />
               <Row label="예상 첫 발송일" value={firstShipEta} />
               <Row label="알림" value="3일 전 알림" />
@@ -101,14 +101,21 @@ export default function CheckoutPage() {
 
         <Divider />
 
-        <Section title="오늘 결제 금액">
-          <div className="flex items-end justify-between">
-            <span className="text-[13px] text-ink-faint">(운임 포함)</span>
-            <span className="text-[19px] font-extrabold text-ink">
-              {formatWon(product.price)}
-            </span>
+        <div className="px-4 py-4">
+          <div className="flex items-start justify-between">
+            <h2 className="text-[15px] font-bold text-ink">오늘 결제 금액</h2>
+            <div className="text-right">
+              <p className="text-[19px] font-extrabold text-ink">
+                {formatWon(product.price)}
+              </p>
+              <p className="mt-0.5 text-[13px] text-ink-faint">(운임 포함)</p>
+              <button className="mt-0.5 flex items-center gap-0.5 text-[13px] text-ink-faint">
+                상세
+                <ChevronDownIcon />
+              </button>
+            </div>
           </div>
-        </Section>
+        </div>
       </div>
 
       <BottomCta>
