@@ -227,10 +227,14 @@ function ProductThumbFull({ tone }: { tone: "cushion" | "scalp" }) {
     );
   }
   return (
-    <div className="h-full w-full bg-gradient-to-br from-[#4a5a3e] via-[#3c4a32] to-[#28331f]">
-      <div className="flex h-full w-full items-center justify-center">
-        <div className="h-32 w-24 rounded-2xl bg-[#cfe0b9]/80" />
-      </div>
-    </div>
+    <Image
+      src="/products/libeauche-refill.png"
+      alt="리보에이치 두피 강화 클리닉 리필"
+      fill
+      priority
+      sizes="430px"
+      quality={95}
+      className="object-cover"
+    />
   );
 }

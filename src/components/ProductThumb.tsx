@@ -3,7 +3,7 @@ import type { ProductTone } from "@/lib/types";
 
 const TONE_STYLES: Record<ProductTone, string> = {
   cushion: "bg-[#f4dcd2]",
-  scalp: "bg-gradient-to-br from-[#3f4a34] to-[#2b3324]",
+  scalp: "bg-[#f2ede2]",
 };
 
 export function ProductThumb({
@@ -28,14 +28,13 @@ export function ProductThumb({
           className="object-cover"
         />
       ) : (
-        <div
-          className="absolute rounded-md bg-[#c9d6b9]/90"
-          style={{
-            width: size * 0.5,
-            height: size * 0.32,
-            top: size * 0.16,
-            left: size * 0.25,
-          }}
+        <Image
+          src="/products/libeauche-refill.png"
+          alt="리보에이치 두피 강화 클리닉 리필"
+          fill
+          sizes={`${size}px`}
+          quality={95}
+          className="object-cover"
         />
       )}
     </div>
