@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { StoreProvider } from "@/lib/store";
+import { PageTransition } from "@/components/PageTransition";
 
 export const metadata: Metadata = {
   title: "RE:LAY — 리필 구독 예약 프로토타입",
@@ -22,11 +23,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className="h-full antialiased">
-      <body className="min-h-full">
+      <body className="min-h-full" suppressHydrationWarning>
         <StoreProvider>
           <div className="min-h-dvh bg-[#ececec] py-0 sm:py-8">
             <div className="relative mx-auto flex min-h-dvh w-full max-w-[430px] flex-col overflow-hidden bg-white sm:min-h-[880px] sm:rounded-[36px] sm:shadow-2xl sm:shadow-black/10 sm:ring-1 sm:ring-black/5">
-              {children}
+              <PageTransition>{children}</PageTransition>
             </div>
           </div>
         </StoreProvider>

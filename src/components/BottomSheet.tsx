@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface BottomSheetProps {
   open: boolean;
@@ -18,19 +19,31 @@ export function BottomSheet({ open, onClose, children }: BottomSheetProps) {
     };
   }, [open]);
 
-  if (!open) return null;
-
   return (
-    <div className="absolute inset-0 z-30 flex items-end">
-      <button
-        aria-label="닫기"
-        onClick={onClose}
-        className="absolute inset-0 bg-black/45"
-      />
-      <div className="relative z-10 max-h-[85%] w-full overflow-y-auto rounded-t-[24px] bg-white px-5 pb-6 pt-3 shadow-[0_-8px_30px_rgba(0,0,0,0.12)]">
-        <div className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-line" />
-        {children}
-      </div>
-    </div>
+    <AnimatePresence>
+      {open && (
+        <div className="absolute inset-0 z-30 flex items-end">
+          <motion.button
+            aria-label="닫기"
+            onClick={onClose}
+            className="absolute inset-0 bg-black/45"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          />
+          <motion.div
+            className="relative z-10 max-h-[85%] w-full overflow-y-auto rounded-t-[24px] bg-white px-5 pb-6 pt-3 shadow-[0_-8px_30px_rgba(0,0,0,0.12)]"
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "100%" }}
+            transition={{ type: "spring", damping: 32, stiffness: 340 }}
+          >
+            <div className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-line" />
+            {children}
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
   );
 }

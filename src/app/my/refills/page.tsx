@@ -10,10 +10,19 @@ import { useStore } from "@/lib/store";
 import type { RefillSubscription } from "@/lib/types";
 
 export default function MyRefillsPage() {
-  const { subscriptions, changeNotifyDate, skipCycle, endSubscription, continueSubscription } =
-    useStore();
+  const {
+    subscriptions,
+    changeNotifyDate,
+    skipCycle,
+    endSubscription,
+    continueSubscription,
+    claimVoucher,
+  } = useStore();
 
-  const active = subscriptions.filter((s) => s.status !== "ended");
+  const vouchers = subscriptions.filter((s) => s.status === "voucher");
+  const active = subscriptions.filter(
+    (s) => s.status !== "ended" && s.status !== "voucher",
+  );
   const ended = subscriptions.filter((s) => s.status === "ended");
 
   return (
@@ -25,7 +34,24 @@ export default function MyRefillsPage() {
       </div>
 
       <div className="flex-1 overflow-y-auto px-4 pb-8">
-        {active.length === 0 && (
+        {vouchers.length > 0 && (
+          <div className="mb-6">
+            <h2 className="mb-2 text-[13.5px] font-bold text-ink-faint">
+              체험권
+            </h2>
+            <div className="flex flex-col gap-3">
+              {vouchers.map((sub) => (
+                <VoucherCard
+                  key={sub.id}
+                  sub={sub}
+                  onClaim={() => claimVoucher(sub.id)}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {active.length === 0 && vouchers.length === 0 && (
           <p className="mt-10 text-center text-[13.5px] text-ink-faint">
             진행 중인 리필 구독이 없어요.
           </p>
@@ -92,6 +118,49 @@ export default function MyRefillsPage() {
             </div>
           </div>
         )}
+      </div>
+    </div>
+  );
+}
+
+function VoucherCard({
+  sub,
+  onClaim,
+}: {
+  sub: RefillSubscription;
+  onClaim: () => void;
+}) {
+  const product = PRODUCTS[sub.productId];
+  if (!product) return null;
+
+  return (
+    <div className="rounded-card border border-line p-4">
+      <div className="flex items-start gap-3">
+        <ProductThumb tone={product.tone} size={56} />
+        <div className="flex-1">
+          <p className="text-[13.5px] font-bold text-ink">
+            {product.brand} {product.name}
+          </p>
+          <p className="text-[12.5px] text-ink-faint">{product.option}</p>
+          <span className="mt-1 inline-block rounded-full bg-primary-soft/60 px-2 py-0.5 text-[11.5px] font-semibold text-primary">
+            체험권
+          </span>
+        </div>
+      </div>
+
+      <div className="mt-3 flex items-center justify-between text-[13.5px]">
+        <span className="text-ink-soft">첫 리필 혜택</span>
+        <span className="font-bold text-ink">
+          본품과 동일한 {product.benefitPercent}%
+        </span>
+      </div>
+      <div className="mt-1.5 flex items-center justify-between text-[13.5px]">
+        <span className="text-ink-soft">신청 가능 기한</span>
+        <span className="font-bold text-ink">{sub.nextNotifyDate}까지</span>
+      </div>
+
+      <div className="mt-4">
+        <PrimaryButton onClick={onClaim}>지금 신청하기</PrimaryButton>
       </div>
     </div>
   );

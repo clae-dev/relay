@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { TopBar } from "@/components/TopBar";
 import { ProductThumb } from "@/components/ProductThumb";
@@ -41,7 +42,7 @@ export default function ProductPage() {
     <div className="flex flex-1 flex-col">
       <TopBar showHome showSearch showBag />
 
-      <div className="relative aspect-square w-full">
+      <div className="relative aspect-square w-full overflow-hidden">
         <ProductThumbFull tone={product.tone} />
         <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5">
           {[0, 1, 2, 3, 4].map((i) => (
@@ -61,21 +62,36 @@ export default function ProductPage() {
 
       <div className="px-4 pt-4">
         <div className="flex items-center justify-between">
-          <p className="text-[14px] font-bold text-ink-faint">
+          <p className="text-[14px] font-medium text-ink">
             {product.brand} <span className="ml-0.5">›</span>
           </p>
           <ShareIcon className="text-ink-faint" />
         </div>
-        <p className="mt-1.5 text-[16px] font-bold leading-snug text-ink">
-          {product.name}
+        <p className="mt-1.5 text-[16px] font-normal leading-snug text-ink">
+          {product.detailTitle}
         </p>
         <p className="text-[13.5px] text-ink-faint">{product.option}</p>
 
-        <p className="mt-3 text-[22px] font-extrabold text-ink">
-          {formatWon(product.price)}
-        </p>
+        <div className="mt-3">
+          <p className="text-[22px] font-extrabold text-ink">
+            {product.price.toLocaleString("ko-KR")}
+            <span className="text-[16px] font-semibold">원</span>
+          </p>
+          <div className="flex items-baseline gap-1.5">
+            <p className="text-[22px] font-extrabold text-accent">
+              {product.maxBenefitPrice.toLocaleString("ko-KR")}
+              <span className="text-[16px] font-semibold">원</span>
+            </p>
+            <span className="flex items-center gap-0.5 text-[13px] font-medium text-accent">
+              최대 혜택가
+              <span className="text-[12px]" aria-hidden>
+                ⓘ
+              </span>
+            </span>
+          </div>
+        </div>
 
-        <div className="mt-4 flex items-center justify-between rounded-card border border-primary/30 bg-primary-soft/40 px-4 py-3">
+        <div className="mt-4 flex items-center justify-between rounded-card border border-[#F0F0F0] px-[21px] py-[19px] pr-[29px]">
           <div>
             <p className="text-[13.5px] font-bold text-primary">
               RE:LAY 체험 혜택
@@ -104,13 +120,25 @@ export default function ProductPage() {
           <button
             aria-label="찜하기"
             onClick={() => setLiked((v) => !v)}
-            className={`flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-btn border ${
+            className={`flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-2xl border ${
               liked ? "border-accent text-accent" : "border-line text-ink-faint"
             }`}
           >
             <HeartIcon className={liked ? "fill-accent" : ""} />
           </button>
-          <PrimaryButton onClick={() => setSheetOpen(true)}>
+          <button
+            onClick={() => setSheetOpen(true)}
+            className="flex flex-1 items-center justify-center gap-1.5 rounded-2xl border border-[#03C75A] py-3.5 text-[15px] font-bold text-[#03C75A] transition active:opacity-70"
+          >
+            <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[#03C75A] text-[10px] font-bold text-white">
+              N
+            </span>
+            pay 구매
+          </button>
+          <PrimaryButton
+            onClick={() => setSheetOpen(true)}
+            className="flex-1 rounded-2xl"
+          >
             구매하기
           </PrimaryButton>
         </div>
@@ -182,20 +210,23 @@ export default function ProductPage() {
 }
 
 function ProductThumbFull({ tone }: { tone: "cushion" | "scalp" }) {
-  const gradient =
-    tone === "cushion"
-      ? "from-[#f6e2d8] via-[#f2d3c4] to-[#e7b9a6]"
-      : "from-[#4a5a3e] via-[#3c4a32] to-[#28331f]";
+  if (tone === "cushion") {
+    return (
+      <Image
+        src="/products/hera-cushion-v2.png"
+        alt="헤라 블랙 쿠션 파운데이션"
+        fill
+        priority
+        sizes="430px"
+        quality={95}
+        className="object-cover"
+      />
+    );
+  }
   return (
-    <div className={`h-full w-full bg-gradient-to-br ${gradient}`}>
+    <div className="h-full w-full bg-gradient-to-br from-[#4a5a3e] via-[#3c4a32] to-[#28331f]">
       <div className="flex h-full w-full items-center justify-center">
-        <div
-          className={`rounded-full ${
-            tone === "cushion"
-              ? "h-40 w-40 border-[6px] border-ink/80 bg-ink/5"
-              : "h-32 w-24 rounded-2xl bg-[#cfe0b9]/80"
-          }`}
-        />
+        <div className="h-32 w-24 rounded-2xl bg-[#cfe0b9]/80" />
       </div>
     </div>
   );

@@ -59,6 +59,7 @@ interface StoreApi extends State {
   skipCycle: (id: string) => void;
   endSubscription: (id: string) => void;
   continueSubscription: (id: string) => void;
+  claimVoucher: (id: string) => void;
   startRefillCheckout: (primaryId: string) => void;
   toggleCombinePartner: (partnerId: string) => void;
   setCombineMode: (combine: boolean) => void;
@@ -103,7 +104,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const eligibleCombinePartners = useCallback(
     (id: string) =>
       state.subscriptions.filter(
-        (s) => s.id !== id && s.status !== "ended",
+        (s) => s.id !== id && s.status !== "ended" && s.status !== "voucher",
       ),
     [state.subscriptions],
   );
@@ -139,26 +140,28 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       };
       result = order;
 
-      let subscriptions = prev.subscriptions;
-      if (draft.withSubscription) {
-        const existingIndex = subscriptions.findIndex(
-          (s) => s.productId === draft.productId,
-        );
-        const nextSub: RefillSubscription = {
-          id: existingIndex >= 0 ? subscriptions[existingIndex].id : `sub-${draft.productId}-${Date.now()}`,
-          productId: draft.productId,
-          status: "in_progress",
-          cycleProgress: 0,
-          nextNotifyDate: nextRefillDate,
-          deliveryEta: "예약됨",
-          usageCheck: null,
-          cycleCount: 1,
-        };
-        subscriptions =
+      const existingIndex = prev.subscriptions.findIndex(
+        (s) => s.productId === draft.productId,
+      );
+      const nextSub: RefillSubscription = {
+        id:
           existingIndex >= 0
-            ? subscriptions.map((s, i) => (i === existingIndex ? nextSub : s))
-            : [...subscriptions, nextSub];
-      }
+            ? prev.subscriptions[existingIndex].id
+            : `sub-${draft.productId}-${Date.now()}`,
+        productId: draft.productId,
+        status: draft.withSubscription ? "in_progress" : "voucher",
+        cycleProgress: 0,
+        nextNotifyDate: nextRefillDate,
+        deliveryEta: draft.withSubscription ? "예약됨" : "체험권",
+        usageCheck: null,
+        cycleCount: 1,
+      };
+      const subscriptions =
+        existingIndex >= 0
+          ? prev.subscriptions.map((s, i) =>
+              i === existingIndex ? nextSub : s,
+            )
+          : [...prev.subscriptions, nextSub];
 
       return {
         ...prev,
@@ -237,6 +240,24 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
               deliveryEta: "예약됨",
               nextNotifyDate: addDays(120),
               cycleCount: s.cycleCount + 1,
+            }
+          : s,
+      ),
+    }));
+  }, []);
+
+  const claimVoucher = useCallback((id: string) => {
+    setState((prev) => ({
+      ...prev,
+      subscriptions: prev.subscriptions.map((s) =>
+        s.id === id
+          ? {
+              ...s,
+              status: "in_progress",
+              cycleProgress: 0,
+              usageCheck: null,
+              deliveryEta: "예약됨",
+              nextNotifyDate: addDays(120),
             }
           : s,
       ),
@@ -347,6 +368,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       skipCycle,
       endSubscription,
       continueSubscription,
+      claimVoucher,
       startRefillCheckout,
       toggleCombinePartner,
       setCombineMode,
@@ -363,6 +385,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       skipCycle,
       endSubscription,
       continueSubscription,
+      claimVoucher,
       startRefillCheckout,
       toggleCombinePartner,
       setCombineMode,
