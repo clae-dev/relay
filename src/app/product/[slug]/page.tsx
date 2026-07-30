@@ -213,7 +213,7 @@ function ProductThumbFull({ tone }: { tone: "cushion" | "scalp" }) {
   if (tone === "cushion") {
     return (
       <Image
-        src="/products/hera-cushion-v2.png"
+        src="/products/hera-cushion-swirl.png"
         alt="헤라 블랙 쿠션 파운데이션"
         fill
         priority
