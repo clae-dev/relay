@@ -1,7 +1,15 @@
 import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
 import "./globals.css";
 import { StoreProvider } from "@/lib/store";
 import { PageTransition } from "@/components/PageTransition";
+
+const pretendard = localFont({
+  src: "./fonts/PretendardVariable.woff2",
+  variable: "--font-pretendard",
+  display: "swap",
+  weight: "45 920",
+});
 
 export const metadata: Metadata = {
   title: "RE:LAY — 리필 구독 예약 프로토타입",
@@ -22,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className="h-full antialiased">
+    <html lang="ko" className={`h-full antialiased ${pretendard.variable}`}>
       <body className="min-h-full" suppressHydrationWarning>
         <StoreProvider>
           <div className="min-h-dvh bg-[#ececec] py-0 sm:py-8">

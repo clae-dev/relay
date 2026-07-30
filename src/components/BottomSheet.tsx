@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 
 interface BottomSheetProps {
   open: boolean;
@@ -23,7 +23,7 @@ export function BottomSheet({ open, onClose, children }: BottomSheetProps) {
     <AnimatePresence>
       {open && (
         <div className="absolute inset-0 z-30 flex items-end">
-          <motion.button
+          <m.button
             aria-label="닫기"
             onClick={onClose}
             className="absolute inset-0 bg-black/45"
@@ -32,7 +32,7 @@ export function BottomSheet({ open, onClose, children }: BottomSheetProps) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           />
-          <motion.div
+          <m.div
             className="relative z-10 max-h-[85%] w-full overflow-y-auto rounded-t-[24px] bg-white px-5 pb-6 pt-3 shadow-[0_-8px_30px_rgba(0,0,0,0.12)]"
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
@@ -41,7 +41,7 @@ export function BottomSheet({ open, onClose, children }: BottomSheetProps) {
           >
             <div className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-line" />
             {children}
-          </motion.div>
+          </m.div>
         </div>
       )}
     </AnimatePresence>
